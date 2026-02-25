@@ -28,8 +28,8 @@ By the end of this session, students will be able to:
 
 | # | Segment | Duration |
 |---|---------|----------|
-| 1 | Real-World Applications Across Industries | 10 min |
-| 2 | Classifying Use Cases by Autonomy and Business Value | 20 min |
+| 1 | Real-World Applications Across Industries | 15 min |
+| 2 | Classifying Use Cases by Autonomy and Business Value | 15 min |
 | 3 | Deconstructing Agent-Process Interactions | 15 min |
 | 4 | Break | 10 min |
 | 5 | Lab | 60 min |
@@ -38,131 +38,57 @@ By the end of this session, students will be able to:
 
 ---
 
-## 1. Real-World Applications Across Industries (10 min)
+## 1. Real-World Applications Across Industries (15 min)
 
 ### Why Industry Context Matters
 
 Agentic AI is not a single technology applied uniformly — it is a set of architectural patterns that get instantiated differently depending on the data available, the regulatory environment, the risk tolerance, and the business process being automated. The same reasoning loop looks very different in a hospital than in a logistics warehouse.
 
-This section surveys deployed or actively piloted agentic applications across six industries. For each, we identify the core agent components at work and the business problem being solved.
+> This section surveys deployed or actively piloted agentic applications across six industries. For each, we identify the core agent components at work and the business problem being solved.
 
 ---
 
 ### Healthcare
 
-**Use Case: Clinical Documentation and Decision Support**
-
-In clinical settings, agents are being deployed to reduce the administrative burden on clinicians — one of the leading causes of burnout in the industry. An agent listens to patient-provider conversations via audio transcription, retrieves the patient's EHR history, drafts structured clinical notes in the provider's preferred format, and flags potential drug interactions or missing diagnostic information before the note is finalized.
-
-| Component | Role in This Use Case |
-|---|---|
-| Reasoning Engine | Interprets conversation transcripts, identifies clinically relevant information, drafts notes |
-| Memory | Retrieves patient history across visits from EHR integration |
-| Tools | Audio transcription API, EHR read/write, drug interaction database, alert system |
-| Feedback Loop | Clinician corrections to drafts are logged and used to refine future note quality |
-
-**Business value:** Reduces documentation time per patient visit by 30–50%; increases note completeness; allows clinicians to spend more time in patient-facing care.
-
-**Key constraint:** HIPAA compliance requires all data to remain within approved infrastructure. The agent cannot use third-party hosted LLMs unless they are covered under a Business Associate Agreement.
+<img width="896" height="540" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/4f1c2497-5398-41dc-a011-98cd181a3d25" />
 
 ---
 
 ### Finance
 
-**Use Case: Autonomous Compliance Monitoring**
+<img width="898" height="532" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/216f9e90-bccb-4a03-9476-f9224af33709" />
 
-Financial institutions are deploying agents to continuously monitor transactions, regulatory filings, and internal communications for compliance violations — a task previously handled by large teams of analysts. The agent ingests structured transaction data and unstructured text (emails, chat logs, filings), cross-references against current regulatory rules, flags anomalies, generates preliminary investigation reports, and routes high-confidence violations to human reviewers.
-
-| Component | Role in This Use Case |
-|---|---|
-| Reasoning Engine | Classifies transactions and communications against regulatory rule sets |
-| Memory | Long-term store of flagged patterns and previous case outcomes |
-| Tools | Transaction database, regulatory rule engine, document parser, case management API |
-| Feedback Loop | Reviewer decisions (confirmed violation vs. false positive) update the agent's classification confidence |
-
-**Business value:** Reduces analyst time spent on low-confidence reviews by 60–70%; improves detection coverage; creates auditable decision trails required by regulators.
-
-**Key constraint:** Every agent decision must be explainable and logged. Black-box reasoning is unacceptable in a regulated environment — this is why LangGraph's explicit state management and observability are particularly well-suited here.
 
 ---
 
 ### Customer Service
 
-**Use Case: Intelligent Tier-1 Support Resolution**
-
-Rather than routing every inbound query to a human agent, organizations are deploying agentic systems that can resolve a defined set of support scenarios end-to-end: order status, refund processing, account updates, subscription changes, and basic troubleshooting. The agent retrieves customer data, executes the resolution action, and escalates to a human only when the scenario falls outside its defined scope.
-
-| Component | Role in This Use Case |
-|---|---|
-| Reasoning Engine | Classifies intent, selects resolution path, drafts customer-facing responses |
-| Memory | Customer history, previous tickets, account preferences |
-| Tools | CRM, order management system, refund API, escalation trigger, email/chat interface |
-| Feedback Loop | Customer satisfaction scores and escalation rates drive prompt and routing adjustments |
-
-**Business value:** Resolution without human involvement for 40–60% of inbound volume; faster resolution times; 24/7 availability without staffing cost.
-
-**Key constraint:** The agent must know when not to act. A well-designed escalation path is as important as the resolution logic — agents that over-automate in customer service destroy trust rapidly.
+<img width="891" height="530" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/9fc3f6f6-c85b-4afc-ad08-48af66e039ef" />
 
 ---
 
 ### Human Resources
 
-**Use Case: Talent Acquisition Pipeline Automation**
+<img width="886" height="535" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/75cff03c-9d27-404f-a51e-c7df58a8176c" />
 
-Recruiting agents are being deployed to handle the top-of-funnel stages of hiring: screening inbound applications against job requirements, scheduling interviews, sending status updates to candidates, and generating structured summaries for hiring managers. More advanced deployments include sourcing — the agent proactively identifies potential candidates from professional networks based on the role's competency profile.
-
-| Component | Role in This Use Case |
-|---|---|
-| Reasoning Engine | Matches candidate profiles to role requirements, generates assessment summaries |
-| Memory | Candidate database, past hiring decisions, role-specific scoring criteria |
-| Tools | ATS integration, calendar API, LinkedIn/sourcing API, email system |
-| Feedback Loop | Hiring manager feedback on candidate quality refines future screening criteria |
-
-**Business value:** Reduces time-to-first-interview by 50–70%; ensures consistent application of screening criteria; frees recruiters for relationship-intensive work.
-
-**Key constraint:** Automated screening carries significant bias risk. Agents trained on historical hiring data may perpetuate historical biases. Human review of screening decisions is a governance requirement, not an optional enhancement.
 
 ---
 
 ### Logistics and Supply Chain
 
-**Use Case: Dynamic Inventory and Fulfillment Optimization**
+<img width="889" height="536" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/6458837d-cc3d-4f6f-a9c4-b63767a28645" />
 
-Logistics agents monitor real-time inventory levels across warehouse locations, predict stockout risk based on demand signals (sales velocity, seasonal patterns, promotional calendars), generate purchase orders, coordinate with suppliers via API, and reroute fulfillment when a warehouse is over-capacity or a shipment is delayed.
-
-| Component | Role in This Use Case |
-|---|---|
-| Reasoning Engine | Forecasts demand, identifies reorder triggers, selects optimal fulfillment path |
-| Memory | Historical demand data, supplier lead times, warehouse capacity records |
-| Tools | Inventory management system, ERP, supplier APIs, shipping carrier APIs, alerting system |
-| Feedback Loop | Actual vs. predicted demand updates the agent's forecasting model over time |
-
-**Business value:** Reduces stockout incidents by 20–35%; decreases excess inventory carrying cost; accelerates response to supply chain disruptions.
-
-**Key constraint:** The agent must not place orders autonomously above a defined value threshold without human approval. High-value procurement decisions require explicit human-in-the-loop checkpoints.
 
 ---
 
 ### Marketing and Growth
 
-**Use Case: Personalized Campaign Orchestration**
+<img width="886" height="536" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/388b28ea-d7dc-4d58-a374-ba644025e729" />
 
-Marketing agents are deployed to manage multi-channel campaign execution at a level of personalization that would be impossible to achieve manually. The agent segments audiences based on behavioral signals, selects content variants for each segment, schedules and distributes campaigns across channels (email, paid, social), monitors engagement metrics in real time, and adjusts spend allocation based on performance.
-
-| Component | Role in This Use Case |
-|---|---|
-| Reasoning Engine | Interprets engagement data, selects content and channel strategies, generates copy variants |
-| Memory | Customer behavioral history, campaign performance records, segment definitions |
-| Tools | CRM, ad platform APIs (Meta, Google), email platform, analytics API, A/B testing framework |
-| Feedback Loop | Engagement metrics (open rate, CTR, conversion) drive real-time reallocation of budget and content |
-
-**Business value:** Increases campaign ROI by 15–40% through personalization at scale; reduces manual campaign management overhead; enables continuous experimentation without analyst bottlenecks.
-
-**Key constraint:** Autonomous ad spend management requires strict budget guardrails and human approval for spend above defined thresholds. Unconstrained agents can exhaust budgets or make purchases that violate brand safety policies.
 
 ---
 
-## 2. Classifying Use Cases by Autonomy and Business Value (20 min)
+## 2. Classifying Use Cases by Autonomy and Business Value (15 min)
 
 ### Why Classification Matters
 
@@ -174,42 +100,21 @@ A rigorous classification framework helps teams make informed decisions about ho
 
 Use cases can be mapped on two axes:
 
-**Axis 1: Autonomy Level** — how much the agent can do without human involvement
+<img width="545" height="180" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/5e26c6a7-00ff-46ed-9967-72c080949fc8" />
 
-| Level | Description | Example |
-|---|---|---|
-| **Assisted** | Agent suggests; human decides and acts | Drafts a response for agent review |
-| **Supervised** | Agent acts; human reviews before effect is permanent | Prepares a purchase order pending approval |
-| **Automated** | Agent acts within defined scope; human monitors | Resolves standard support tickets autonomously |
-| **Autonomous** | Agent acts across broad scope; humans review exceptions only | Manages inventory reordering end-to-end |
-
-**Axis 2: Business Value Tier** — the magnitude of impact delivered
-
-| Tier | Description | Example |
-|---|---|---|
-| **Efficiency** | Reduces time or cost of existing tasks | Automated email triage |
-| **Quality** | Improves accuracy, consistency, or coverage | Compliance monitoring at scale |
-| **Capability** | Enables tasks previously impossible at this scale | Personalized 1:1 marketing for millions of users |
-| **Transformation** | Restructures how a business process fundamentally works | Autonomous supply chain management |
 
 ### Applying the Classification: Industry Examples
 
-| Use Case | Autonomy Level | Business Value Tier | Governance Implication |
-|---|---|---|---|
-| Clinical note drafting | Supervised | Quality | Clinician must review all notes before submission |
-| Compliance monitoring | Automated | Quality + Capability | Human reviews flagged cases; agent monitors continuously |
-| Tier-1 support resolution | Automated | Efficiency + Capability | Escalation path required for out-of-scope scenarios |
-| Talent screening | Supervised | Efficiency | Human review required; bias audit recommended |
-| Inventory reordering (low value) | Autonomous | Efficiency + Capability | Budget cap enforced; exception alerts to humans |
-| Campaign orchestration | Automated | Capability + Transformation | Spend guardrails; brand safety checks |
+<img width="659" height="238" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/7a9713e9-f4ab-4a1f-bd26-0dac66f70e8b" />
+
+
 
 ### The Autonomy-Risk Relationship
 
 There is a direct relationship between autonomy level and the governance investment required:
 
-```
-Higher Autonomy → Higher Risk of Unintended Action → Higher Governance Investment Required
-```
+<img width="683" height="93" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/b6218ee6-07ff-4739-90b9-1986b3ead4dc" />
+
 
 This does not mean high autonomy is bad — it means the decision to grant autonomy must be made deliberately, with commensurate guardrails. An agent running at "Autonomous" level without governance infrastructure is not a more capable system — it is a liability.
 
@@ -227,13 +132,7 @@ A common misconception is that deploying an agent means replacing a business pro
 
 For any use case, the agent's role can be mapped across five process stages:
 
-| Stage | Agent Role | Human Role |
-|---|---|---|
-| **Trigger** | Detects event and initiates workflow | Defines the trigger conditions |
-| **Data Gathering** | Retrieves and assembles relevant context | Reviews data sources and access permissions |
-| **Reasoning and Decision** | Analyzes situation and selects action | Sets decision boundaries and escalation rules |
-| **Execution** | Calls tools, updates systems, sends communications | Approves high-risk actions; handles exceptions |
-| **Logging and Review** | Records reasoning trace and outcome | Audits performance; adjusts configuration |
+<img width="553" height="201" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/00eca675-6584-40b1-8571-37db09f23839" />
 
 The boundary between "Agent Role" and "Human Role" at each stage is not fixed — it is a design decision that reflects the organization's risk tolerance, regulatory environment, and confidence in the agent's reliability.
 
@@ -316,9 +215,13 @@ This is the level of specificity required to design a production agent. High-lev
 
 ## 6. Wrap-Up & Reflection (5 min)
 
-1. Name two industries not covered in this session and describe one plausible agentic application in each. Which agent components would be most critical?
-2. Using the two-axis model, classify the following: an agent that automatically posts to a company's social media accounts based on trending topics. What autonomy level is appropriate at initial deployment? What would need to be true before expanding it?
-3. In the customer service deconstruction, what would happen if the `shipping_escalation` tool returned an error? Trace the agent's likely behavior and identify where a human checkpoint should be added.
+### Key Takeaways
+
+- Agents Create Outcomes, Not Just Answers
+- Autonomy Is a Design Choice, Not a Feature
+- Agents Don’t Replace Processes. They Integrate Into Them.
+
+---
 
 > Next session: **Prompts, Intents, and Context**
 
