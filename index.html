@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Case Analysis: Technical Lens — General Assembly BAA 5.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Barlow+Condensed:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --black:#0d0d0d;--black2:#1a1a1a;--black3:#252525;--black4:#333;
+  --line:#2e2e2e;--line2:#404040;--gray-dk:#555;--gray:#888;
+  --gray-lt:#bbb;--white:#fff;
+  --GA-red:#e8333a;--GA-red2:#ff4a50;
+  --yellow:#f5c518;--green:#22c55e;--blue:#3b82f6;--purple:#a855f7;--teal:#14b8a6;
+  --r:4px;--r-lg:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--black);color:var(--white);font-size:16px;line-height:1.6;min-height:100vh}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--black2)}
+::-webkit-scrollbar-thumb{background:var(--black4);border-radius:3px}
+header{position:sticky;top:0;z-index:500;background:var(--black);border-bottom:2px solid var(--GA-red);display:flex;align-items:stretch;height:58px}
+.ga-logo{display:flex;align-items:center;gap:10px;padding:0 20px;border-right:1px solid var(--line);flex-shrink:0;cursor:pointer}
+.ga-mark{width:32px;height:32px;background:var(--GA-red);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.05em;color:#fff;border-radius:2px;flex-shrink:0}
+.ga-name{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--gray-lt);text-transform:uppercase;line-height:1.2}
+.ga-name span{display:block;font-size:10px;color:var(--gray);font-weight:600}
+.tab-bar{display:flex;align-items:stretch;overflow-x:auto;flex:1;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab{display:flex;align-items:center;gap:6px;padding:0 18px;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--gray);letter-spacing:.02em;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:color .15s,border-color .15s;position:relative;top:2px}
+.tab:hover{color:var(--white)}
+.tab.active{color:var(--white);border-bottom-color:var(--GA-red)}
+.hd-end{display:flex;align-items:center;padding:0 18px;border-left:1px solid var(--line);flex-shrink:0}
+.prog-chip{background:var(--GA-red);color:#fff;font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 12px;border-radius:20px;white-space:nowrap}
+.section{display:none}.section.active{display:block}
+.wrap{max-width:860px;margin:0 auto;padding:48px 24px 80px}
+.eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--GA-red);margin-bottom:10px;display:block}
+h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.4rem,6vw,3.8rem);font-weight:900;line-height:1.05;letter-spacing:-.01em;color:#fff;margin-bottom:16px}
+h1 .red{color:var(--GA-red)}
+h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.7rem,4vw,2.4rem);font-weight:800;letter-spacing:-.01em;line-height:1.1;color:#fff;margin-bottom:8px}
+h2 .red{color:var(--GA-red)}
+h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:6px}
+.lead{font-size:1.05rem;color:var(--gray-lt);line-height:1.7;margin-bottom:28px;max-width:640px}
+.body-t{font-size:.95rem;color:var(--gray-lt);line-height:1.7}
+.hr{height:1px;background:var(--line);margin:36px 0}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r);font-family:'Barlow',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all .15s;letter-spacing:.01em;white-space:nowrap}
+.btn-red{background:var(--GA-red);color:#fff;border-color:var(--GA-red)}
+.btn-red:hover{background:var(--GA-red2);border-color:var(--GA-red2);transform:translateY(-1px)}
+.btn-green{background:var(--green);color:var(--black);border-color:var(--green)}
+.btn-green:hover{background:#16a34a;border-color:#16a34a;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--gray-lt);border:2px solid var(--line2);padding:10px 20px;font-size:.88rem;font-weight:600;cursor:pointer;border-radius:var(--r);transition:all .15s}
+.btn-ghost:hover{border-color:var(--gray);color:#fff}
+.card{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;margin-bottom:16px}
+.card-rb{border-top:3px solid var(--GA-red)}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.b-red{background:rgba(232,51,58,.18);color:var(--GA-red)}
+.b-green{background:rgba(34,197,94,.18);color:var(--green)}
+.b-yellow{background:rgba(245,197,24,.18);color:var(--yellow)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.a1{animation:fadeUp .35s ease both}
+.a2{animation:fadeUp .35s .1s ease both}
+.a3{animation:fadeUp .35s .2s ease both}
+/* HERO */
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;background:var(--black3);border:1px solid var(--line);border-radius:var(--r);padding:6px 14px;margin-bottom:20px;font-size:12px;font-weight:600;color:var(--gray-lt);letter-spacing:.04em}
+.hero-kicker .dot{width:8px;height:8px;background:var(--GA-red);border-radius:50%;flex-shrink:0}
+.obj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:32px}
+.obj-card{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;display:flex;gap:14px;align-items:flex-start}
+.obj-num{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:var(--GA-red);line-height:1;flex-shrink:0}
+.obj-body{font-size:.9rem;color:var(--gray-lt);line-height:1.55;padding-top:4px}
+.roadmap{display:flex;flex-direction:column}
+.rm-item{display:flex;align-items:flex-start;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.rm-item:last-child{border-bottom:none}
+.rm-dot{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;border:2px solid var(--line);background:var(--black3);color:var(--gray);transition:all .25s}
+.rm-dot.done{background:var(--green);border-color:var(--green);color:var(--black)}
+.rm-dot.active{background:var(--GA-red);border-color:var(--GA-red);color:#fff}
+.rm-label{font-size:.95rem;font-weight:600;color:var(--gray);transition:color .2s;padding-top:6px}
+.rm-label.active{color:#fff}
+.rm-label.done{color:var(--green);text-decoration:line-through}
+.rm-sub{font-size:.8rem;color:var(--gray-dk);margin-top:2px}
+/* CASE BRIEF TABS */
+.brief-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.brief-tab{padding:7px 16px;border-radius:20px;font-size:.82rem;font-weight:700;cursor:pointer;border:1.5px solid var(--line2);background:var(--black3);color:var(--gray);transition:all .15s;letter-spacing:.02em}
+.brief-tab:hover{border-color:var(--GA-red);color:#fff}
+.brief-tab.active{background:var(--GA-red);border-color:var(--GA-red);color:#fff}
+.brief-panel{display:none}
+.brief-panel.active{display:block}
+.brief-block{background:var(--black2);border:1px solid var(--line);border-left:4px solid var(--GA-red);border-radius:var(--r-lg);padding:20px 22px;font-size:.95rem;color:var(--gray-lt);line-height:1.7}
+.brief-block strong{color:#fff}
+/* DRAG & DROP shared */
+.drag-pool{background:var(--black3);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;margin-bottom:18px}
+.pool-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-dk);margin-bottom:10px}
+.drag-chips{display:flex;flex-wrap:wrap;gap:8px;min-height:36px}
+.drag-chip{display:inline-flex;padding:8px 14px;border-radius:20px;background:var(--black2);border:1.5px solid var(--line2);color:var(--gray-lt);font-size:.84rem;font-weight:600;cursor:grab;user-select:none;transition:all .15s;line-height:1.4}
+.drag-chip:active{cursor:grabbing}
+.drag-chip:hover{border-color:var(--GA-red);color:#fff}
+.drag-chip.correct{background:rgba(34,197,94,.12);border-color:var(--green);color:var(--green);cursor:default}
+.drag-chip.wrong{background:rgba(232,51,58,.12);border-color:var(--GA-red);color:var(--GA-red);cursor:default}
+/* TOOL KIT ZONES */
+.tool-zones{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.tool-zone{border-radius:var(--r-lg);overflow:hidden}
+.tz-head{padding:12px 18px;display:flex;align-items:center;gap:10px}
+.tz-icon{font-size:1.2rem;flex-shrink:0}
+.tz-title{font-family:'Barlow Condensed',sans-serif;font-size:.92rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.tz-sub{font-size:.78rem;color:rgba(255,255,255,.42);margin-top:1px}
+.tz-body{background:var(--black2);border:1px solid var(--line);border-top:none;border-radius:0 0 var(--r-lg) var(--r-lg);padding:12px;min-height:70px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;transition:background .15s}
+.tz-body.dragover{background:var(--black3)}
+.tz-empty{font-size:.8rem;color:var(--gray-dk);font-style:italic;width:100%;text-align:center;padding:12px 0}
+/* MEMORY GRID */
+.mem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+@media(max-width:580px){.mem-grid{grid-template-columns:1fr}}
+.mem-zone{border-radius:var(--r-lg);overflow:hidden}
+.mz-head{padding:12px 14px;display:flex;align-items:center;gap:8px}
+.mz-icon{font-size:1.1rem;flex-shrink:0}
+.mz-title{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em}
+.mz-sub{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:1px}
+.mz-body{background:var(--black2);border:1px solid var(--line);border-top:none;border-radius:0 0 var(--r-lg) var(--r-lg);padding:10px;min-height:80px;display:flex;flex-direction:column;gap:6px;transition:background .15s}
+.mz-body.dragover{background:var(--black3)}
+.mz-empty{font-size:.78rem;color:var(--gray-dk);font-style:italic;text-align:center;padding:12px 0}
+/* SEQUENCER */
+.seq-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.seq-item{display:flex;align-items:flex-start;gap:12px;background:var(--black2);border:2px solid var(--line);border-radius:var(--r-lg);padding:14px 16px;cursor:grab;user-select:none;transition:all .18s}
+.seq-item:active{cursor:grabbing;opacity:.7}
+.seq-item.dragging{opacity:.4}
+.seq-item.drag-over{border-color:var(--GA-red);background:rgba(232,51,58,.05)}
+.seq-handle{color:var(--gray-dk);font-size:.9rem;flex-shrink:0;padding-top:2px;line-height:1}
+.seq-pos{width:28px;height:28px;border-radius:6px;flex-shrink:0;background:var(--black3);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;color:var(--gray);transition:all .2s}
+.seq-item.correct .seq-pos{background:var(--green);border-color:var(--green);color:var(--black)}
+.seq-item.wrong .seq-pos{background:var(--GA-red);border-color:var(--GA-red);color:#fff}
+.seq-text{font-size:.92rem;color:var(--gray-lt);line-height:1.55;flex:1}
+.seq-item.correct .seq-text{color:#fff}
+.seq-item.wrong .seq-text{color:var(--gray-lt)}
+.seq-icon{font-size:1.1rem;flex-shrink:0}
+/* CANVAS BUILDER */
+.canvas-section{margin-bottom:24px}
+.canvas-label{font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.canvas-label span{width:20px;height:20px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0}
+.canvas-choices{display:flex;flex-direction:column;gap:8px}
+.canvas-opt{background:var(--black2);border:2px solid var(--line);border-radius:var(--r-lg);padding:12px 16px;cursor:pointer;font-size:.9rem;color:var(--gray-lt);transition:all .15s;display:flex;align-items:flex-start;gap:12px;text-align:left;width:100%}
+.canvas-opt:hover:not(.disabled){border-color:var(--GA-red);color:#fff;background:rgba(232,51,58,.05)}
+.canvas-opt.selected{border-color:var(--GA-red);background:rgba(232,51,58,.06);color:#fff}
+.canvas-opt.correct{border-color:var(--green);background:rgba(34,197,94,.07);color:#fff}
+.canvas-opt.wrong{border-color:var(--GA-red);background:rgba(232,51,58,.08);color:#fff}
+.canvas-opt.reveal{border-color:var(--yellow);background:rgba(245,197,24,.07);color:#fff}
+.canvas-opt.disabled{cursor:default}
+.copt-k{width:26px;height:26px;border-radius:5px;flex-shrink:0;background:var(--black3);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;color:var(--gray);transition:all .15s}
+.canvas-opt.selected .copt-k{border-color:var(--GA-red);color:var(--GA-red)}
+.canvas-opt.correct .copt-k{background:var(--green);border-color:var(--green);color:var(--black)}
+.canvas-opt.wrong .copt-k{background:var(--GA-red);border-color:var(--GA-red);color:#fff}
+.canvas-opt.reveal .copt-k{background:var(--yellow);border-color:var(--yellow);color:var(--black)}
+.canvas-fb{display:none;margin-top:10px;padding:10px 14px;border-radius:var(--r);font-size:.85rem;line-height:1.55}
+.canvas-fb.show{display:block}
+.canvas-fb.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#86efac}
+.canvas-fb.bad{background:rgba(232,51,58,.1);border:1px solid rgba(232,51,58,.25);color:#fca5a5}
+/* QUIZ */
+.qz-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.qz-meta span{font-size:.85rem;color:var(--gray);font-weight:500}
+.prog-bar{height:4px;background:var(--black3);border-radius:2px;margin-bottom:28px;overflow:hidden}
+.prog-fill{height:100%;background:var(--GA-red);border-radius:2px;transition:width .4s ease}
+.quiz-q{font-family:'Barlow Condensed',sans-serif;font-size:1.45rem;font-weight:700;line-height:1.3;color:#fff;margin-bottom:20px;letter-spacing:-.01em}
+.q-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.q-opt{background:var(--black2);border:2px solid var(--line);border-radius:var(--r-lg);padding:14px 18px;cursor:pointer;display:flex;align-items:flex-start;gap:14px;font-size:.95rem;color:var(--gray-lt);transition:all .16s;text-align:left;width:100%}
+.q-opt:hover:not(.disabled){border-color:var(--GA-red);color:#fff;background:rgba(232,51,58,.05)}
+.q-opt.correct{border-color:var(--green);background:rgba(34,197,94,.07);color:#fff}
+.q-opt.wrong{border-color:var(--GA-red);background:rgba(232,51,58,.08);color:#fff}
+.q-opt.disabled{cursor:default}
+.opt-k{width:30px;height:30px;border-radius:6px;flex-shrink:0;background:var(--black3);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;color:var(--gray);transition:all .16s}
+.q-opt.correct .opt-k{background:var(--green);border-color:var(--green);color:var(--black)}
+.q-opt.wrong .opt-k{background:var(--GA-red);border-color:var(--GA-red);color:#fff}
+.q-opt:hover:not(.disabled) .opt-k{border-color:var(--GA-red);color:var(--GA-red)}
+.fb-box{display:none;border-radius:var(--r-lg);padding:14px 18px;font-size:.92rem;line-height:1.6;margin-bottom:14px}
+.fb-box.show{display:flex;gap:10px;align-items:flex-start}
+.fb-box.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac}
+.fb-box.bad{background:rgba(232,51,58,.1);border:1px solid rgba(232,51,58,.3);color:#fca5a5}
+.fb-icon{font-size:1.1rem;flex-shrink:0}
+.qz-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+/* RESULTS */
+.results-ring{position:relative;width:120px;height:120px;flex-shrink:0}
+.results-ring-txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-pct{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:#fff;line-height:1}
+.ring-sub{font-size:.7rem;color:var(--gray);letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+.score-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.score-row:last-child{border-bottom:none}
+.score-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.score-bar-wrap{width:80px;height:3px;background:var(--black3);border-radius:2px;flex-shrink:0}
+.score-bar-fill{height:100%;border-radius:2px}
+.takeaway-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.takeaway-item:last-child{border-bottom:none}
+.tk-num{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;color:var(--GA-red);flex-shrink:0;line-height:1;padding-top:2px}
+.tk-txt{font-size:.92rem;color:var(--gray-lt);line-height:1.65}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="ga-logo" onclick="nav('intro')">
+    <div class="ga-mark">GA</div>
+    <div class="ga-name">General Assembly<span>Build AI Agents · BAA 5.0</span></div>
+  </div>
+  <div class="tab-bar">
+    <div class="tab active" onclick="nav('intro')"   id="t-intro">⬡ Overview</div>
+    <div class="tab"        onclick="nav('brief')"   id="t-brief">📋 Case Brief</div>
+    <div class="tab"        onclick="nav('tools')"   id="t-tools">🔧 Tool Kit</div>
+    <div class="tab"        onclick="nav('memory')"  id="t-memory">💾 Memory</div>
+    <div class="tab"        onclick="nav('steps')"   id="t-steps">↻ Reasoning</div>
+    <div class="tab"        onclick="nav('canvas')"  id="t-canvas">⌖ Canvas</div>
+    <div class="tab"        onclick="nav('quiz')"    id="t-quiz">◇ Check</div>
+    <div class="tab"        onclick="nav('results')" id="t-results">★ Results</div>
+  </div>
+  <div class="hd-end"><div class="prog-chip" id="progressChip">0 / 4</div></div>
+</header>
+
+<!-- ══════════════ INTRO ══════════════ -->
+<div class="section active" id="s-intro">
+  <div class="wrap">
+    <div class="a1" style="padding-bottom:40px;border-bottom:1px solid var(--line);margin-bottom:36px">
+      <div class="hero-kicker"><div class="dot"></div>Hands-On Lab &nbsp;·&nbsp; Module 5 &nbsp;·&nbsp; BAA 5.0</div>
+      <h1>Case Analysis<br/><span class="red">Technical Lens</span></h1>
+      <p class="lead">Real-world agents are defined by three things: the tools they reach for, the memory they carry, and the reasoning steps they follow. In this lab you deconstruct a live use case — a Customer Insight Analyzer — from the inside out.</p>
+      <button class="btn btn-red" onclick="nav('brief')">Start Lab →</button>
+    </div>
+    <span class="eyebrow">Learning Objectives</span>
+    <div class="obj-grid a2">
+      <div class="obj-card"><div class="obj-num">01</div><div class="obj-body">Read a real-world agent use case and identify its inputs, goals, constraints, and success criteria.</div></div>
+      <div class="obj-card"><div class="obj-num">02</div><div class="obj-body">Classify which tools the agent uses — data connectors, reasoning tools, and delivery mechanisms.</div></div>
+      <div class="obj-card"><div class="obj-num">03</div><div class="obj-body">Map which type of memory — short-term, long-term, or working — each information need requires.</div></div>
+      <div class="obj-card"><div class="obj-num">04</div><div class="obj-body">Sequence the agent's full reasoning flow from data ingestion through validated delivery.</div></div>
+    </div>
+    <div class="hr"></div>
+    <span class="eyebrow">Your Lab Roadmap</span>
+    <div class="card a3">
+      <div class="roadmap">
+        <div class="rm-item"><div class="rm-dot active" id="dot-brief">1</div><div><div class="rm-label active" id="lbl-brief">Case Brief</div><div class="rm-sub">Read the Customer Insight Analyzer scenario — explore context, goal, constraints, and data sources</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-tools">2</div><div><div class="rm-label" id="lbl-tools">Tool Kit Mapping</div><div class="rm-sub">Drag 12 tools into the correct layer — Data In · Reasoning · Action · Delivery</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-memory">3</div><div><div class="rm-label" id="lbl-memory">Memory Classification</div><div class="rm-sub">Assign 9 information needs to Short-term · Long-term · Working memory</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-steps">4</div><div><div class="rm-label" id="lbl-steps">Reasoning Sequencer</div><div class="rm-sub">Drag 7 reasoning steps into the correct execution order</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-canvas">—</div><div><div class="rm-label" id="lbl-canvas">Agent Canvas</div><div class="rm-sub">4 synthesis questions — consolidate your full technical deconstruction</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-quiz">5</div><div><div class="rm-label" id="lbl-quiz">Knowledge Check</div><div class="rm-sub">7 questions · agent anatomy · tools, memory, and reasoning · 70% to pass</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-results">—</div><div><div class="rm-label" id="lbl-results">Your Results</div><div class="rm-sub">Score breakdown · key takeaways</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CASE BRIEF ══════════════ -->
+<div class="section" id="s-brief">
+  <div class="wrap">
+    <span class="eyebrow">Section 01 · Read Before You Build</span>
+    <h2>The <span class="red">Case Brief</span></h2>
+    <p class="lead">Before deconstructing any agent, you must understand the problem it solves. Explore all four context panels — each informs a different part of your technical analysis.</p>
+
+    <div class="brief-tabs">
+      <div class="brief-tab active" onclick="showBrief('scenario')">📍 Scenario</div>
+      <div class="brief-tab" onclick="showBrief('goal')">🎯 Goal</div>
+      <div class="brief-tab" onclick="showBrief('data')">🗄️ Data Sources</div>
+      <div class="brief-tab" onclick="showBrief('constraints')">⚠️ Constraints</div>
+    </div>
+
+    <div class="brief-panel active" id="bp-scenario">
+      <div class="brief-block">
+        <strong>The Customer Insight Analyzer</strong><br/><br/>
+        Acme SaaS has 50,000 customers and a support team drowning in tickets. Every quarter, the Product team spends three weeks manually reading Zendesk tickets, App Store reviews, and Salesforce CRM notes to produce a Customer Insight Report — a document that shapes the next quarter's roadmap.<br/><br/>
+        The process is slow, inconsistent, and expensive. Important signals get missed. The Product team suspects there are patterns in the noise — recurring complaints, emerging feature requests, churn predictors — that no human has the bandwidth to surface at scale.<br/><br/>
+        They want an <strong>autonomous agent</strong> that ingests all three data sources continuously, identifies patterns, generates strategic insights, and delivers a structured report to the product leadership team every Monday morning — with no manual intervention.
+      </div>
+    </div>
+    <div class="brief-panel" id="bp-goal">
+      <div class="brief-block">
+        <strong>Primary Goal</strong><br/>
+        Produce a weekly Customer Insight Report containing the top 5 emerging themes, top 3 churn risk signals, and the top 2 feature requests — ranked by frequency and sentiment intensity — without any human labor in the loop.<br/><br/>
+        <strong>Success Criteria</strong><br/>
+        ✓ Report delivered every Monday before 8:00 AM<br/>
+        ✓ Each insight is backed by a minimum of 3 source citations<br/>
+        ✓ Sentiment scoring is consistent week-over-week<br/>
+        ✓ No PII (personally identifiable information) included in the final report<br/>
+        ✓ Product team spends less than 10 minutes reviewing — not rewriting<br/><br/>
+        <strong>Why an Agent (not a script)?</strong><br/>
+        A script could pull data. An agent can <em>reason</em> about it — classifying, comparing to prior weeks, surfacing non-obvious connections, and adjusting its analysis when data quality is poor.
+      </div>
+    </div>
+    <div class="brief-panel" id="bp-data">
+      <div class="brief-block">
+        <strong>Data Source 1 — Zendesk (Support Tickets)</strong><br/>
+        ~2,000 new tickets per week. Plain text, tagged by category. Contains customer language, frustration signals, and unstructured feature requests. Requires API authentication.<br/><br/>
+        <strong>Data Source 2 — App Store Reviews</strong><br/>
+        ~300 new reviews per week across iOS and Android. Public data — no auth required. Contains star ratings + free-text commentary. High signal-to-noise ratio for product quality perception.<br/><br/>
+        <strong>Data Source 3 — Salesforce CRM Notes</strong><br/>
+        Customer success rep call notes from ~150 accounts per week. Highly valuable but inconsistently formatted — some reps write paragraphs, others write bullet points or nothing at all. Requires Salesforce API connector with OAuth.<br/><br/>
+        <strong>Total weekly input volume:</strong> ~2,450 documents · ~1.2M tokens before chunking.
+      </div>
+    </div>
+    <div class="brief-panel" id="bp-constraints">
+      <div class="brief-block">
+        <strong>Privacy Constraint</strong><br/>
+        No customer names, email addresses, or account IDs may appear in the final report. The agent must strip or anonymize PII at the data ingestion stage.<br/><br/>
+        <strong>Reliability Constraint</strong><br/>
+        If fewer than 500 tickets are retrieved in a week (indicating an API failure), the agent must not generate a report. It should flag the error and notify the ops team.<br/><br/>
+        <strong>Cost Constraint</strong><br/>
+        The total LLM cost per weekly run must stay under $4.00. This forces the agent to use chunking and summarization strategies rather than passing raw full-text to the LLM.<br/><br/>
+        <strong>Consistency Constraint</strong><br/>
+        The agent must compare this week's insights against the prior 4 weeks to distinguish "new signal" from "persistent issue." This requires persistent memory across runs.
+      </div>
+    </div>
+
+    <div class="hr"></div>
+    <div class="card" style="background:rgba(232,51,58,.06);border-color:rgba(232,51,58,.2);padding:14px 18px;margin-bottom:24px">
+      <span style="font-size:.88rem;color:var(--gray-lt)">📌 <strong style="color:#fff">Before moving on:</strong> Make sure you've read all four panels. The constraints panel in particular directly shapes which tools, memory types, and reasoning steps the agent needs.</span>
+    </div>
+    <button class="btn btn-red" onclick="markDone('brief');nav('tools')">I've Read the Brief — Start Analysis →</button>
+  </div>
+</div>
+
+<!-- ══════════════ TOOL KIT ══════════════ -->
+<div class="section" id="s-tools">
+  <div class="wrap">
+    <span class="eyebrow">Section 02 · Lab Activity</span>
+    <h2>Tool Kit <span class="red">Mapping</span></h2>
+    <p class="lead">Every agent capability requires a tool. Drag each tool into the layer where it operates — Data In, Reasoning, Action, or Delivery. Use the Case Brief if you need to re-read the scenario.</p>
+
+    <div class="drag-pool" id="toolPool">
+      <div class="pool-label">Unassigned tools — drag to the correct layer</div>
+      <div class="drag-chips" id="toolPoolChips"></div>
+    </div>
+    <div class="tool-zones" id="toolZones"></div>
+
+    <details style="margin-bottom:14px">
+      <summary style="font-size:.82rem;color:var(--gray-dk);cursor:pointer">On mobile? Tap to assign</summary>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px" id="mobileTool"></div>
+    </details>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-red"   id="toolCheckBtn"  onclick="checkTools()" disabled>Check Tool Kit</button>
+      <button class="btn btn-ghost" id="toolNextBtn"   onclick="markDone('tools');nav('memory')" style="display:none">Next: Memory →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ MEMORY ══════════════ -->
+<div class="section" id="s-memory">
+  <div class="wrap">
+    <span class="eyebrow">Section 03 · Lab Activity</span>
+    <h2>Memory <span class="red">Classification</span></h2>
+    <p class="lead">The right memory architecture prevents the agent from re-doing work, losing context, or forgetting historical patterns. Classify each information need into the memory type that handles it best.</p>
+
+    <div class="card" style="padding:18px 20px;margin-bottom:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+      <div style="text-align:center">
+        <div style="font-size:1.4rem;margin-bottom:6px">⚡</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--yellow);margin-bottom:4px">Short-Term</div>
+        <div style="font-size:.78rem;color:var(--gray-lt);line-height:1.5">Current context window — what's happening right now in this run</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:1.4rem;margin-bottom:6px">🏛️</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--purple);margin-bottom:4px">Long-Term</div>
+        <div style="font-size:.78rem;color:var(--gray-lt);line-height:1.5">Persists across runs — vector store, database, or retrieval system</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:1.4rem;margin-bottom:6px">📋</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);margin-bottom:4px">Working</div>
+        <div style="font-size:.78rem;color:var(--gray-lt);line-height:1.5">Task state — tracks progress, completed steps, and pending actions</div>
+      </div>
+    </div>
+
+    <div class="drag-pool" id="memPool">
+      <div class="pool-label">Unassigned information needs — drag to the correct memory type</div>
+      <div class="drag-chips" id="memPoolChips"></div>
+    </div>
+    <div class="mem-grid" id="memZones"></div>
+
+    <details style="margin-bottom:14px">
+      <summary style="font-size:.82rem;color:var(--gray-dk);cursor:pointer">On mobile? Tap to assign</summary>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px" id="mobileMem"></div>
+    </details>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-red"   id="memCheckBtn"  onclick="checkMem()" disabled>Check Memory Map</button>
+      <button class="btn btn-ghost" id="memNextBtn"   onclick="markDone('memory');nav('steps')" style="display:none">Next: Reasoning Steps →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ REASONING STEPS ══════════════ -->
+<div class="section" id="s-steps">
+  <div class="wrap">
+    <span class="eyebrow">Section 04 · Lab Activity</span>
+    <h2>Reasoning <span class="red">Sequencer</span></h2>
+    <p class="lead">A well-designed agent executes steps in a deliberate order. Drag the reasoning steps below into the correct sequence — from first action to final delivery.</p>
+    <div class="card" style="background:rgba(232,51,58,.06);border-color:rgba(232,51,58,.2);padding:14px 18px;margin-bottom:20px">
+      <span style="font-size:.88rem;color:var(--gray-lt)">💡 <strong style="color:#fff">Hint:</strong> Think about what the agent must know before it can do each subsequent step. What must be true before you can classify? Before you can compare? Before you can deliver?</span>
+    </div>
+    <div class="seq-list" id="seqList"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-red"   id="stepsCheckBtn"  onclick="checkSteps()">Check Sequence</button>
+      <button class="btn btn-ghost" id="stepsNextBtn"   onclick="markDone('steps');nav('canvas')" style="display:none">Next: Agent Canvas →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CANVAS ══════════════ -->
+<div class="section" id="s-canvas">
+  <div class="wrap">
+    <span class="eyebrow">Synthesis Activity</span>
+    <h2>Agent <span class="red">Canvas</span></h2>
+    <p class="lead">Consolidate your full technical deconstruction. For each design decision, choose the best answer based on what you learned in the Case Brief and previous sections.</p>
+
+    <div id="canvasQs"></div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+      <button class="btn btn-ghost" id="canvasNextBtn" onclick="nav('quiz')" style="display:none">Go to Knowledge Check →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ QUIZ ══════════════ -->
+<div class="section" id="s-quiz">
+  <div class="wrap">
+    <span class="eyebrow">Section 05</span>
+    <h2>Knowledge <span class="red">Check</span></h2>
+    <p class="lead">Test your understanding. You need 70% or higher to mark this section complete.</p>
+    <div id="quizActive">
+      <div class="qz-meta"><span id="qMeta">Question 1 of 7</span><span id="qScoreTxt">Score: 0 / 0</span></div>
+      <div class="prog-bar"><div class="prog-fill" id="qProg" style="width:0%"></div></div>
+      <div class="card card-rb">
+        <div class="quiz-q" id="quizQ"></div>
+        <div class="q-opts" id="quizOpts"></div>
+        <div class="fb-box" id="quizFB"></div>
+        <div class="qz-foot">
+          <button class="btn btn-red" id="qNextBtn" onclick="nextQ()" style="display:none">Continue →</button>
+          <div style="font-size:.85rem;color:var(--gray);font-family:'JetBrains Mono',monospace" id="qz-s"></div>
+        </div>
+      </div>
+    </div>
+    <div id="quizDone" style="display:none">
+      <div class="card card-rb">
+        <h3 style="font-size:1.2rem;margin-bottom:8px">Quiz Complete <span id="qBadge"></span></h3>
+        <p class="body-t" style="margin-bottom:20px" id="qMsg"></p>
+        <button class="btn btn-green" onclick="markDone('quiz');buildResults();nav('results')">See Your Results →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ RESULTS ══════════════ -->
+<div class="section" id="s-results">
+  <div class="wrap">
+    <span class="eyebrow">Your Results</span>
+    <h2>Lab <span class="red">Complete</span></h2>
+    <div id="resultsBody"></div>
+  </div>
+</div>
+
+<script>
+// ─── Nav ──────────────────────────────────────────────────────────────────────
+const ALL_SECS=['intro','brief','tools','memory','steps','canvas','quiz','results'];
+let completed=new Set(), sectionScores={};
+
+function nav(id){
+  ALL_SECS.forEach(s=>{
+    document.getElementById('s-'+s).classList.remove('active');
+    const t=document.getElementById('t-'+s);
+    if(t) t.classList.remove('active');
+  });
+  document.getElementById('s-'+id).classList.add('active');
+  const t=document.getElementById('t-'+id);
+  if(t) t.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='tools'  &&!toolBuilt)   buildTools();
+  if(id==='memory' &&!memBuilt)    buildMem();
+  if(id==='steps'  &&!stepsBuilt)  buildSteps();
+  if(id==='canvas' &&!canvasBuilt) buildCanvas();
+  if(id==='quiz'   &&!quizStarted) initQuiz();
+}
+
+function markDone(key){
+  completed.add(key);
+  document.getElementById('progressChip').textContent=completed.size+' / 4';
+  const d=document.getElementById('dot-'+key);
+  const l=document.getElementById('lbl-'+key);
+  if(d){d.className='rm-dot done';d.textContent='✓';}
+  if(l){l.className='rm-label done';}
+}
+
+// ─── CASE BRIEF TABS ──────────────────────────────────────────────────────────
+function showBrief(id){
+  document.querySelectorAll('.brief-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.brief-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('bp-'+id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ─── TOOL KIT ─────────────────────────────────────────────────────────────────
+const TOOL_ZONES=[
+  {id:'datain',   label:'Data In',   icon:'📥', color:'#3b82f6', bg:'rgba(59,130,246,0.14)',
+   desc:'Connectors that pull raw data into the agent for processing'},
+  {id:'reasoning',label:'Reasoning', icon:'🧠', color:'#a855f7', bg:'rgba(168,85,247,0.14)',
+   desc:'LLM and analytical tools that interpret, classify, and synthesize'},
+  {id:'action',   label:'Action',    icon:'⚡', color:'#e8333a', bg:'rgba(232,51,58,0.14)',
+   desc:'Tools that transform, filter, protect, or restructure data mid-run'},
+  {id:'delivery', label:'Delivery',  icon:'📤', color:'#22c55e', bg:'rgba(34,197,94,0.14)',
+   desc:'Mechanisms that push the final output to stakeholders or systems'},
+];
+
+const TOOL_ITEMS=[
+  {id:'t1',  text:'Zendesk API connector — pulls this week\'s support tickets',          answer:'datain'},
+  {id:'t2',  text:'App Store scraper — fetches new iOS and Android reviews',             answer:'datain'},
+  {id:'t3',  text:'Salesforce OAuth connector — reads CRM call notes',                   answer:'datain'},
+  {id:'t4',  text:'LLM (GPT-4o) — classifies sentiment and extracts themes per chunk',   answer:'reasoning'},
+  {id:'t5',  text:'Vector similarity search — finds matching patterns in prior reports',  answer:'reasoning'},
+  {id:'t6',  text:'Topic clustering model — groups tickets into recurring issue buckets', answer:'reasoning'},
+  {id:'t7',  text:'PII scrubber — strips customer names, emails, and account IDs',       answer:'action'},
+  {id:'t8',  text:'Chunker & token counter — splits 1.2M tokens into $4-budget slices',  answer:'action'},
+  {id:'t9',  text:'Data validator — checks if ticket count ≥ 500 before proceeding',      answer:'action'},
+  {id:'t10', text:'Report template engine — formats insights into structured Markdown',   answer:'delivery'},
+  {id:'t11', text:'Email sender — delivers Monday 8:00 AM report to product leadership',  answer:'delivery'},
+  {id:'t12', text:'Slack notification — alerts ops team when a pipeline error is detected',answer:'delivery'},
+].sort(()=>Math.random()-.5);
+
+let toolBuilt=false, toolPlacements={}, toolChecked=false;
+
+function buildTools(){
+  toolBuilt=true;
+  const pool=document.getElementById('toolPoolChips');
+  const mob=document.getElementById('mobileTool');
+  TOOL_ITEMS.forEach(item=>{
+    pool.appendChild(makeToolChip(item));
+    const row=mkMobRow(item,TOOL_ZONES,(iid,zid)=>mobToolAssign(iid,zid));
+    mob.appendChild(row);
+  });
+  const container=document.getElementById('toolZones');
+  TOOL_ZONES.forEach(z=>{
+    const zone=document.createElement('div');
+    zone.className='tool-zone'; zone.style.border=`1px solid ${z.color}30`;
+    const head=document.createElement('div');
+    head.className='tz-head'; head.style.background=z.bg;
+    head.innerHTML=`<span class="tz-icon">${z.icon}</span><div><div class="tz-title" style="color:${z.color}">${z.label}</div><div class="tz-sub">${z.desc}</div></div>`;
+    const body=mkDropBody('tzone-'+z.id,z,toolPlacements,()=>toolChecked,TOOL_ITEMS,makeToolChip,()=>updateToolBtn());
+    zone.appendChild(head); zone.appendChild(body); container.appendChild(zone);
+  });
+}
+function makeToolChip(item){return mkChip('tchip-',item);}
+function mobToolAssign(itemId,zoneId){
+  toolPlacements[itemId]=zoneId;
+  rmChipFromDom('tchip-'+itemId,'toolPoolChips');
+  appendToZone('tzone-'+zoneId,TOOL_ITEMS.find(x=>x.id===itemId),makeToolChip);
+  updateToolBtn();
+}
+function updateToolBtn(){
+  document.getElementById('toolCheckBtn').disabled=!TOOL_ITEMS.every(i=>toolPlacements[i.id]);
+}
+function checkTools(){
+  toolChecked=true; let correct=0;
+  TOOL_ITEMS.forEach(item=>{
+    const chip=document.getElementById('tchip-'+item.id); if(!chip) return;
+    if(toolPlacements[item.id]===item.answer){chip.classList.add('correct');correct++;}
+    else chip.classList.add('wrong');
+  });
+  sectionScores.tools={earned:correct,possible:TOOL_ITEMS.length};
+  document.getElementById('toolCheckBtn').style.display='none';
+  document.getElementById('toolNextBtn').style.display='inline-flex';
+}
+
+// ─── MEMORY ───────────────────────────────────────────────────────────────────
+const MEM_ZONES=[
+  {id:'shortterm', label:'Short-Term',  icon:'⚡', color:'#f5c518', bg:'rgba(245,197,24,0.12)',
+   desc:'Lives in the context window — exists only during this run'},
+  {id:'longterm',  label:'Long-Term',   icon:'🏛️', color:'#a855f7', bg:'rgba(168,85,247,0.12)',
+   desc:'Persists across runs — vector store or structured database'},
+  {id:'working',   label:'Working',     icon:'📋', color:'#14b8a6', bg:'rgba(20,184,166,0.12)',
+   desc:'Tracks task progress, completed steps, and pending actions'},
+];
+
+const MEM_ITEMS=[
+  {id:'m1', text:'The 2,450 raw documents currently being processed this run',            answer:'shortterm'},
+  {id:'m2', text:'The LLM\'s running synthesis as it reads each batch of tickets',        answer:'shortterm'},
+  {id:'m3', text:'The intermediate draft report before validation is complete',            answer:'shortterm'},
+  {id:'m4', text:'Last 4 weeks of Customer Insight Reports for trend comparison',          answer:'longterm'},
+  {id:'m5', text:'Historical sentiment scores by product area going back 6 months',        answer:'longterm'},
+  {id:'m6', text:'Embedding vectors of all prior customer feedback for similarity search', answer:'longterm'},
+  {id:'m7', text:'Which of the 2,450 documents have already been chunked and analyzed',    answer:'working'},
+  {id:'m8', text:'Current token spend counter — must stay under $4.00 this run',           answer:'working'},
+  {id:'m9', text:'Flag indicating whether the 500-ticket threshold check passed or failed', answer:'working'},
+].sort(()=>Math.random()-.5);
+
+let memBuilt=false, memPlacements={}, memChecked=false;
+
+function buildMem(){
+  memBuilt=true;
+  const pool=document.getElementById('memPoolChips');
+  const mob=document.getElementById('mobileMem');
+  MEM_ITEMS.forEach(item=>{
+    pool.appendChild(makeMemChip(item));
+    const row=mkMobRow(item,MEM_ZONES,(iid,zid)=>mobMemAssign(iid,zid));
+    mob.appendChild(row);
+  });
+  const grid=document.getElementById('memZones');
+  MEM_ZONES.forEach(z=>{
+    const zone=document.createElement('div');
+    zone.className='mem-zone'; zone.style.border=`1px solid ${z.color}30`;
+    const head=document.createElement('div');
+    head.className='mz-head'; head.style.background=z.bg;
+    head.innerHTML=`<span class="mz-icon">${z.icon}</span><div><div class="mz-title" style="color:${z.color}">${z.label}</div><div class="mz-sub">${z.desc}</div></div>`;
+    const body=mkDropBody('mzone-'+z.id,z,memPlacements,()=>memChecked,MEM_ITEMS,makeMemChip,()=>updateMemBtn(),'column');
+    zone.appendChild(head); zone.appendChild(body); grid.appendChild(zone);
+  });
+}
+function makeMemChip(item){return mkChip('mchip-',item);}
+function mobMemAssign(itemId,zoneId){
+  memPlacements[itemId]=zoneId;
+  rmChipFromDom('mchip-'+itemId,'memPoolChips');
+  appendToZone('mzone-'+zoneId,MEM_ITEMS.find(x=>x.id===itemId),makeMemChip);
+  updateMemBtn();
+}
+function updateMemBtn(){
+  document.getElementById('memCheckBtn').disabled=!MEM_ITEMS.every(i=>memPlacements[i.id]);
+}
+function checkMem(){
+  memChecked=true; let correct=0;
+  MEM_ITEMS.forEach(item=>{
+    const chip=document.getElementById('mchip-'+item.id); if(!chip) return;
+    if(memPlacements[item.id]===item.answer){chip.classList.add('correct');correct++;}
+    else chip.classList.add('wrong');
+  });
+  sectionScores.memory={earned:correct,possible:MEM_ITEMS.length};
+  document.getElementById('memCheckBtn').style.display='none';
+  document.getElementById('memNextBtn').style.display='inline-flex';
+}
+
+// ─── SEQUENCER ────────────────────────────────────────────────────────────────
+const STEPS_CORRECT=[
+  {icon:'📥', text:'Ingest & validate data — pull tickets, reviews, and CRM notes; check ≥500 ticket threshold'},
+  {icon:'🧹', text:'Preprocess & protect — chunk documents to budget, strip all PII before any LLM call'},
+  {icon:'🔍', text:'Classify & extract — run sentiment scoring and theme extraction on each chunk'},
+  {icon:'📊', text:'Cluster & rank — group themes by frequency; rank by sentiment intensity and volume'},
+  {icon:'🏛️', text:'Compare to history — retrieve prior 4 weeks from vector store; flag new vs. persistent signals'},
+  {icon:'✍️', text:'Draft & structure — generate the insight report with supporting citations for each finding'},
+  {icon:'✅', text:'Validate & deliver — check PII compliance and citation count; send report via email and Slack'},
+];
+
+let stepsBuilt=false, stepsChecked=false;
+let stepsOrder=[...STEPS_CORRECT].sort(()=>Math.random()-.5);
+
+function buildSteps(){
+  stepsBuilt=true;
+  const list=document.getElementById('seqList');
+  stepsOrder.forEach((step,i)=>{
+    const item=document.createElement('div');
+    item.className='seq-item'; item.dataset.idx=i;
+    item.setAttribute('draggable','true');
+    item.innerHTML=`<span class="seq-handle">⠿</span><div class="seq-pos">${i+1}</div><span class="seq-icon">${step.icon}</span><div class="seq-text">${step.text}</div>`;
+    item.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',i);item.classList.add('dragging');});
+    item.addEventListener('dragend',()=>{item.classList.remove('dragging');document.querySelectorAll('.seq-item').forEach(x=>x.classList.remove('drag-over'));});
+    item.addEventListener('dragover',e=>{e.preventDefault();if(!stepsChecked)item.classList.add('drag-over');});
+    item.addEventListener('dragleave',()=>item.classList.remove('drag-over'));
+    item.addEventListener('drop',e=>{
+      e.preventDefault(); item.classList.remove('drag-over');
+      if(stepsChecked) return;
+      const fromIdx=parseInt(e.dataTransfer.getData('text/plain'));
+      const toIdx=parseInt(item.dataset.idx);
+      if(fromIdx===toIdx) return;
+      [stepsOrder[fromIdx],stepsOrder[toIdx]]=[stepsOrder[toIdx],stepsOrder[fromIdx]];
+      rebuildSteps();
+    });
+    list.appendChild(item);
+  });
+}
+
+function rebuildSteps(){
+  const list=document.getElementById('seqList'); list.innerHTML='';
+  stepsBuilt=false; buildSteps();
+}
+
+function checkSteps(){
+  stepsChecked=true;
+  let correct=0;
+  const items=document.querySelectorAll('.seq-item');
+  items.forEach((item,i)=>{
+    const idx=parseInt(item.dataset.idx);
+    const isCorrect=stepsOrder[idx].text===STEPS_CORRECT[i].text;
+    if(isCorrect){item.classList.add('correct');correct++;}
+    else item.classList.add('wrong');
+    item.querySelector('.seq-pos').textContent=i+1;
+  });
+  sectionScores.steps={earned:correct,possible:STEPS_CORRECT.length};
+  document.getElementById('stepsCheckBtn').style.display='none';
+  document.getElementById('stepsNextBtn').style.display='inline-flex';
+}
+
+// ─── CANVAS ───────────────────────────────────────────────────────────────────
+const CANVAS_QS=[
+  {
+    label:'Tool Architecture Decision',
+    icon:'🔧', color:'#3b82f6',
+    q:'The agent must compare this week\'s insights to the prior 4 weeks. Which tool combination handles this correctly?',
+    opts:[
+      {k:'A', t:'Re-run the full analysis on all 5 weeks of data every Monday'},
+      {k:'B', t:'Vector store (long-term memory) + semantic similarity search against stored prior reports'},
+      {k:'C', t:'Ask the LLM to "remember" the prior weeks using a longer system prompt'},
+      {k:'D', t:'Email the prior reports to the agent as attachments before each run'},
+    ],
+    ans:1,
+    ok:'Correct! The vector store holds embedded prior reports. The similarity search tool retrieves semantically relevant prior insights — efficiently and without exceeding the cost budget.',
+    bad:'Not quite. Option B is correct: a vector store persists prior embeddings across runs, and a similarity search retrieves relevant historical patterns — this is exactly what long-term memory is for.',
+  },
+  {
+    label:'Memory Design Decision',
+    icon:'💾', color:'#a855f7',
+    q:'The $4.00 per-run cost constraint requires the agent to track how many tokens have been spent mid-run and stop if the limit is reached. Which memory type handles this?',
+    opts:[
+      {k:'A', t:'Long-term memory — stored in the vector database for future reference'},
+      {k:'B', t:'Short-term memory — passed as part of the LLM system prompt'},
+      {k:'C', t:'Working memory — a live counter that tracks token spend during the current run'},
+      {k:'D', t:'No memory needed — the LLM tracks this automatically'},
+    ],
+    ans:2,
+    ok:'Correct! Working memory is task-state memory — it tracks what\'s happening right now during execution: how many tokens have been spent, which documents are processed, what still remains.',
+    bad:'Not quite. This is working memory: a live counter that exists during the current run to track task state. It\'s not persisted after the run ends, and it\'s not passed to the LLM — it\'s managed by the agent\'s control layer.',
+  },
+  {
+    label:'Reasoning Step Priority',
+    icon:'🧠', color:'#e8333a',
+    q:'Why must PII scrubbing happen BEFORE the LLM analysis step — not after?',
+    opts:[
+      {k:'A', t:'Because the LLM runs faster when PII is removed'},
+      {k:'B', t:'Because customer names improve the sentiment analysis accuracy'},
+      {k:'C', t:'Because once PII is passed to an external LLM API it has already left the organization — scrubbing afterward does not undo that exposure'},
+      {k:'D', t:'Because PII scrubbing is only required for the final report, not during analysis'},
+    ],
+    ans:2,
+    ok:'Correct! Privacy by design means data is protected at the boundary — before it leaves your system. If PII reaches the LLM API call, it has already been transmitted to a third party. Order of operations is a security decision.',
+    bad:'Not quite. Option C is the key principle: once PII is sent to an external API, it has left your system. Scrubbing it from the final report afterward doesn\'t undo that transmission. Privacy protection must happen at the input stage.',
+  },
+  {
+    label:'Failure Mode Identification',
+    icon:'⚠️', color:'#f5c518',
+    q:'If the agent skips the 500-ticket threshold check and generates a report from only 47 tickets (due to an API failure), which failure mode does this represent?',
+    opts:[
+      {k:'A', t:'Over-Autonomy — the agent took an action outside its intended scope'},
+      {k:'B', t:'Feedback Ignorance — the agent didn\'t evaluate whether its input data was sufficient before proceeding'},
+      {k:'C', t:'Tool Misalignment — the wrong API connector was selected'},
+      {k:'D', t:'Poor Task Decomposition — the planning step was missing a sub-task'},
+    ],
+    ans:1,
+    ok:'Correct! Feedback Ignorance means the agent didn\'t evaluate a critical signal before acting. The 500-ticket check is an input quality gate — skipping it is a failure to observe and evaluate before proceeding.',
+    bad:'Not quite. This is Feedback Ignorance: the agent failed to evaluate whether its input was sufficient before proceeding. The threshold check is an observation step in the loop — skipping it causes the agent to act on bad data without knowing it.',
+  },
+];
+
+let canvasBuilt=false, canvasAnswered={};
+
+function buildCanvas(){
+  canvasBuilt=true;
+  const container=document.getElementById('canvasQs');
+  CANVAS_QS.forEach((q,i)=>{
+    const sec=document.createElement('div');
+    sec.className='canvas-section';
+    sec.innerHTML=`
+      <div class="canvas-label">
+        <span style="background:${q.color}22;color:${q.color}">${q.icon}</span>
+        ${q.label}
+      </div>
+      <div style="background:var(--black3);border:1px solid var(--line);border-left:4px solid ${q.color};border-radius:var(--r-lg);padding:16px 18px;margin-bottom:12px;font-size:.95rem;color:var(--gray-lt);line-height:1.65">${q.q}</div>
+      <div class="canvas-choices" id="cq-${i}">
+        ${q.opts.map((o,j)=>`<button class="canvas-opt" id="copt-${i}-${j}" onclick="answerCanvas(${i},${j})"><div class="copt-k">${o.k}</div>${o.t}</button>`).join('')}
+      </div>
+      <div class="canvas-fb" id="cfb-${i}"></div>
+      ${i<CANVAS_QS.length-1?'<div style="height:1px;background:var(--line);margin:28px 0"></div>':''}
+    `;
+    container.appendChild(sec);
+  });
+}
+
+function answerCanvas(qIdx,optIdx){
+  if(canvasAnswered[qIdx]!==undefined) return;
+  canvasAnswered[qIdx]=optIdx;
+  const q=CANVAS_QS[qIdx]; const ok=optIdx===q.ans;
+  const opts=document.getElementById('cq-'+qIdx).querySelectorAll('.canvas-opt');
+  opts.forEach((btn,j)=>{
+    btn.classList.add('disabled');
+    if(j===q.ans) btn.classList.add('correct');
+    else if(j===optIdx&&!ok) btn.classList.add('wrong');
+  });
+  const fb=document.getElementById('cfb-'+qIdx);
+  fb.innerHTML=`<strong>${ok?'✓ Correct:':'✗ Not quite:'}</strong> ${ok?q.ok:q.bad}`;
+  fb.className='canvas-fb show '+(ok?'ok':'bad');
+  // update score
+  const earned=Object.keys(canvasAnswered).filter(k=>canvasAnswered[k]===CANVAS_QS[k].ans).length;
+  sectionScores.canvas={earned,possible:CANVAS_QS.length};
+  if(Object.keys(canvasAnswered).length===CANVAS_QS.length){
+    document.getElementById('canvasNextBtn').style.display='inline-flex';
+  }
+}
+
+// ─── QUIZ ─────────────────────────────────────────────────────────────────────
+const QUESTIONS=[
+  {q:'In the Customer Insight Analyzer, what is the purpose of the 500-ticket threshold check?',
+   opts:['To limit the LLM context window size','To ensure input data quality before the agent proceeds — preventing a low-quality report from an API failure','To calculate the weekly cost budget','To measure customer sentiment accuracy'],
+   ans:1,
+   ok:'Correct! The threshold is a data quality gate — if fewer than 500 tickets arrived, something went wrong with the pipeline. The agent should stop and alert ops rather than generate a misleading report.',
+   bad:'Not quite. The 500-ticket check is a quality gate: it ensures the agent has sufficient, valid input data before running. Without it, a silent API failure produces a report built on junk data.'},
+  {q:'Which memory type is used to compare this week\'s report against the prior 4 weeks?',
+   opts:['Short-term memory — current context window','Working memory — task progress tracker','Long-term memory — vector store with embedded prior reports','No memory — the LLM infers trends from the current data'],
+   ans:2,
+   ok:'Correct! Long-term memory persists across runs. Prior reports are stored as embeddings in a vector database, and retrieved via semantic similarity search when this week\'s analysis runs.',
+   bad:'Not quite. This requires long-term memory — specifically a vector store that persists prior report embeddings across runs. Short-term and working memory only exist during the current run.'},
+  {q:'Why must PII scrubbing occur BEFORE the LLM analysis step?',
+   opts:['It makes the LLM faster','Once PII is sent to an external LLM API it has already left the organization — scrubbing the final output does not undo the transmission','The LLM cannot process text that contains names','PII scrubbing improves sentiment analysis accuracy'],
+   ans:1,
+   ok:'Correct! Privacy is a boundary decision. If customer names or emails reach the API call, they\'ve been transmitted externally regardless of what happens to the output. Order of operations is a security choice.',
+   bad:'Not quite. Privacy by design requires data protection at the input boundary. Scrubbing after an LLM call doesn\'t undo the fact that PII was already transmitted to a third-party API.'},
+  {q:'What type of tool handles the $4.00 per-run token budget enforcement?',
+   opts:['A reasoning tool — the LLM monitors its own spend','A Data In tool — the connector limits records fetched','An Action tool — the chunker and token counter controls input size before LLM calls','A Delivery tool — the email sender checks the bill'],
+   ans:2,
+   ok:'Correct! The chunker and token counter is an Action layer tool — it processes and controls what reaches the LLM, enforcing the cost constraint before any expensive API call is made.',
+   bad:'Not quite. The chunker/token counter is an Action tool that operates on data mid-pipeline — it controls how much text is passed to the LLM, directly enforcing the budget constraint.'},
+  {q:'Which reasoning step MUST come immediately after theme clustering and ranking?',
+   opts:['Draft the report immediately','Validate PII compliance','Compare findings to the prior 4 weeks in the vector store','Send the email to product leadership'],
+   ans:2,
+   ok:'Correct! After ranking themes, the agent must compare to historical data to distinguish "new signal" from "persistent issue" — a core requirement from the constraints panel.',
+   bad:'Not quite. After clustering and ranking, the agent must retrieve and compare historical patterns — otherwise every insight looks new. Historical comparison distinguishes signal from noise.'},
+  {q:'The Salesforce CRM notes are described as "inconsistently formatted." Which agent capability handles this most directly?',
+   opts:['The email delivery tool','The 500-ticket threshold validator','The LLM\'s ability to interpret unstructured natural language and extract structured insights regardless of format','The PII scrubber'],
+   ans:2,
+   ok:'Correct! The LLM is uniquely suited to reasoning over inconsistently formatted natural language — whether a rep wrote paragraphs or bullet points, the LLM can extract the signal. This is exactly where scripted ETL would fail.',
+   bad:'Not quite. Inconsistently formatted text is where the LLM reasoning tool shines — it can extract structured insights from bullet points, paragraphs, or mixed formats that a scripted parser would choke on.'},
+  {q:'Which of the following best describes why this use case requires an AGENT rather than a simple script?',
+   opts:['Scripts cannot send emails','The agent must reason about data quality, compare patterns across time, adapt to inconsistent formats, and make decisions when constraints are violated — none of which a script can do autonomously','The data volume is too large for a script','An agent is always faster than a script'],
+   ans:1,
+   ok:'Correct! Scripts execute fixed logic. This agent must evaluate input quality, reason about trends, handle formatting variance, enforce constraints dynamically, and decide when to stop. That requires a reasoning loop, not a pipeline.',
+   bad:'Not quite. The full list of requirements — quality gating, historical comparison, format handling, constraint enforcement, and graceful error escalation — demands autonomous reasoning. A script can only execute what was explicitly pre-programmed.'},
+];
+
+let qIdx=0,qScore=0,quizStarted=false,qAnswered=false;
+function initQuiz(){quizStarted=true;qIdx=0;qScore=0;showQ();}
+function showQ(){
+  qAnswered=false;
+  const q=QUESTIONS[qIdx];
+  document.getElementById('qProg').style.width=(qIdx/QUESTIONS.length*100)+'%';
+  document.getElementById('qMeta').textContent='Question '+(qIdx+1)+' of '+QUESTIONS.length;
+  document.getElementById('qScoreTxt').textContent='Score: '+qScore+' / '+qIdx;
+  document.getElementById('quizQ').textContent=q.q;
+  document.getElementById('quizFB').className='fb-box';
+  document.getElementById('quizFB').innerHTML='';
+  document.getElementById('qNextBtn').style.display='none';
+  const L=['A','B','C','D'];
+  document.getElementById('quizOpts').innerHTML=q.opts.map((o,i)=>
+    `<button class="q-opt" onclick="answerQ(${i})" id="opt${i}"><div class="opt-k">${L[i]}</div>${o}</button>`
+  ).join('');
+}
+function answerQ(i){
+  if(qAnswered) return; qAnswered=true;
+  const q=QUESTIONS[qIdx]; const ok=i===q.ans;
+  if(ok) qScore++;
+  document.querySelectorAll('.q-opt').forEach((el,idx)=>{
+    el.classList.add('disabled');
+    if(idx===q.ans) el.classList.add('correct');
+    else if(idx===i&&!ok) el.classList.add('wrong');
+  });
+  const fb=document.getElementById('quizFB');
+  fb.innerHTML=`<span class="fb-icon">${ok?'✓':'✗'}</span><span>${ok?q.ok:q.bad}</span>`;
+  fb.className='fb-box show '+(ok?'ok':'bad');
+  document.getElementById('qScoreTxt').textContent='Score: '+qScore+' / '+(qIdx+1);
+  document.getElementById('qNextBtn').style.display='inline-flex';
+  if(qIdx===QUESTIONS.length-1) document.getElementById('qNextBtn').textContent='See Results →';
+}
+function nextQ(){
+  qIdx++;
+  if(qIdx>=QUESTIONS.length){showQuizDone();return;}
+  showQ();
+}
+function showQuizDone(){
+  document.getElementById('quizActive').style.display='none';
+  document.getElementById('quizDone').style.display='block';
+  const pct=Math.round(qScore/QUESTIONS.length*100);
+  sectionScores.quiz={earned:qScore,possible:QUESTIONS.length};
+  document.getElementById('qBadge').innerHTML=`<span class="badge ${pct>=70?'b-green':'b-red'}">${qScore}/${QUESTIONS.length} · ${pct}%</span>`;
+  document.getElementById('qMsg').textContent=pct>=70
+    ?`Strong work! You scored ${pct}%. You can now read a real-world use case and identify the exact tools, memory types, and reasoning steps an agent needs to execute it autonomously.`
+    :`You scored ${pct}%. Review the Case Brief constraints and the Tool Kit / Memory sections — focus on why each design decision follows directly from a stated requirement.`;
+  if(pct>=70) markDone('quiz');
+}
+
+// ─── RESULTS ─────────────────────────────────────────────────────────────────
+function buildResults(){
+  markDone('results');
+  const te=Object.values(sectionScores).reduce((s,x)=>s+(x.earned||0),0);
+  const tp=Object.values(sectionScores).reduce((s,x)=>s+(x.possible||0),0);
+  const pct=tp>0?Math.round((te/tp)*100):0;
+  const grade=pct>=90?{l:'Agent Architect',   e:'🏆',m:'Outstanding technical deconstruction.'}:
+              pct>=70?{l:'System Analyst',     e:'🔬',m:'Solid analysis. Review what you missed.'}:
+              pct>=50?{l:'Case Apprentice',    e:'📋',m:'Good start — revisit the Case Brief constraints.'}:
+                      {l:'Explorer',           e:'🔍',m:'Re-read the brief and retry each section.'};
+  const circ=2*Math.PI*52, dash=circ*(1-pct/100);
+  const breakdown=[
+    {key:'tools',  label:'Tool Kit Mapping'},
+    {key:'memory', label:'Memory Classification'},
+    {key:'steps',  label:'Reasoning Sequencer'},
+    {key:'canvas', label:'Agent Canvas Synthesis'},
+    {key:'quiz',   label:'Knowledge Check Quiz'},
+  ];
+  const rows=breakdown.map(item=>{
+    const s=sectionScores[item.key]; if(!s) return '';
+    const p=Math.round((s.earned/s.possible)*100);
+    const col=p>=80?'var(--green)':p>=50?'var(--yellow)':'var(--GA-red)';
+    return `<div class="score-row">
+      <div class="score-dot" style="background:${col}"></div>
+      <span style="flex:1;font-size:.9rem;font-weight:500;color:var(--gray-lt)">${item.label}</span>
+      <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${p}%;background:${col}"></div></div>
+      <span style="font-size:.82rem;color:var(--gray);min-width:38px;text-align:right">${s.earned}/${s.possible}</span>
+      <span class="badge" style="background:${p>=80?'rgba(34,197,94,.15)':p>=50?'rgba(245,197,24,.15)':'rgba(232,51,58,.15)'};color:${col};min-width:38px;text-align:center">${p}%</span>
+    </div>`;
+  }).join('');
+  const takeaways=[
+    'Every agent requirement maps directly to a specific tool, memory type, or reasoning step. Constraints in the brief are design decisions in disguise — read them as architecture requirements.',
+    'PII scrubbing must happen at the input boundary — before any LLM call. Privacy by design means protecting data before it leaves your system, not cleaning the output afterward.',
+    'The difference between a script and an agent is autonomous reasoning under changing conditions: quality gating, historical comparison, format handling, and graceful failure — none of which a fixed pipeline can do.',
+  ].map((t,i)=>`<div class="takeaway-item"><div class="tk-num">0${i+1}</div><div class="tk-txt">${t}</div></div>`).join('');
+  document.getElementById('resultsBody').innerHTML=`
+    <div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap;padding-bottom:36px;border-bottom:1px solid var(--line);margin-bottom:32px">
+      <div class="results-ring">
+        <svg width="120" height="120" style="transform:rotate(-90deg)" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="52" fill="none" stroke="var(--black3)" stroke-width="8"/>
+          <circle cx="60" cy="60" r="52" fill="none" stroke="var(--GA-red)" stroke-width="8"
+            stroke-dasharray="${circ.toFixed(1)}" stroke-dashoffset="${dash.toFixed(1)}"
+            stroke-linecap="round" style="transition:stroke-dashoffset 1.2s ease"/>
+        </svg>
+        <div class="results-ring-txt"><div class="ring-pct">${pct}%</div><div class="ring-sub">score</div></div>
+      </div>
+      <div>
+        <div style="font-size:2rem;margin-bottom:4px">${grade.e}</div>
+        <h2 style="font-size:clamp(2rem,5vw,2.8rem);margin-bottom:6px">${grade.l}</h2>
+        <p style="color:var(--gray-lt);font-size:.95rem">${grade.m}</p>
+        <p style="color:var(--gray-dk);font-size:.82rem;margin-top:6px;font-family:'JetBrains Mono',monospace">${te} pts earned · ${tp} pts possible</p>
+      </div>
+    </div>
+    <span class="eyebrow">Score Breakdown</span>
+    <div class="card" style="padding:8px 20px;margin-bottom:28px">${rows}</div>
+    <span class="eyebrow">Key Takeaways</span>
+    <div class="card" style="padding:8px 20px;margin-bottom:24px">${takeaways}</div>
+    <div style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:var(--r-lg);padding:20px">
+      <p style="font-size:.92rem;color:var(--gray-lt);line-height:1.7">
+        🎉 <strong style="color:#fff">Well done!</strong> You've completed the Case Analysis: Technical Lens lab.<br/>
+        Next module: <strong style="color:#fff">Prompts, Intents, and Context</strong> — where you'll learn how to write the prompts that drive each reasoning step you just designed.
+      </p>
+    </div>`;
+}
+
+// ─── DRAG/DROP HELPERS ────────────────────────────────────────────────────────
+function mkChip(prefix,item){
+  const c=document.createElement('div');
+  c.className='drag-chip'; c.id=prefix+item.id;
+  c.textContent=item.text;
+  c.setAttribute('draggable','true');
+  c.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',item.id));
+  return c;
+}
+
+function mkDropBody(bodyId,zone,placements,isLockedFn,items,chipFn,updateFn,flexDir){
+  const body=document.createElement('div');
+  body.id=bodyId;
+  const fd=flexDir||'wrap';
+  body.style.cssText=`background:var(--black2);border:1px solid var(--line);border-top:none;border-radius:0 0 var(--r-lg) var(--r-lg);padding:12px;min-height:70px;display:flex;flex-${fd==='column'?'direction:column':'wrap:wrap'};gap:8px;align-content:flex-start;transition:background .15s`;
+  body.innerHTML='<span style="font-size:.8rem;color:var(--gray-dk);font-style:italic;width:100%;text-align:center;padding:10px 0">Drop here</span>';
+  body.addEventListener('dragover',e=>{e.preventDefault();body.style.background='var(--black3)';});
+  body.addEventListener('dragleave',()=>body.style.background='var(--black2)');
+  body.addEventListener('drop',e=>{
+    e.preventDefault(); body.style.background='var(--black2)';
+    const id=e.dataTransfer.getData('text/plain');
+    if(isLockedFn()) return;
+    placements[id]=zone.id;
+    const prefix=bodyId.startsWith('tzone')?'tchip-':bodyId.startsWith('mzone')?'mchip-':'cchip-';
+    const chip=document.getElementById(prefix+id);
+    if(chip) chip.parentNode.removeChild(chip);
+    const emp=body.querySelector('span[style*="italic"]');
+    if(emp) emp.remove();
+    body.appendChild(chipFn(items.find(x=>x.id===id)));
+    updateFn();
+  });
+  return body;
+}
+
+function rmChipFromDom(chipId,poolId){
+  const chip=document.getElementById(chipId);
+  if(chip) chip.parentNode.removeChild(chip);
+}
+
+function appendToZone(zoneId,item,chipFn){
+  const body=document.getElementById(zoneId);
+  if(!body) return;
+  const emp=body.querySelector('span[style*="italic"]');
+  if(emp) emp.remove();
+  body.appendChild(chipFn(item));
+}
+
+function mkMobRow(item,zones,assignFn){
+  const row=document.createElement('div');
+  row.style.cssText='padding:10px;background:var(--black2);border-radius:4px;border:1px solid var(--line)';
+  const lbl=document.createElement('div');
+  lbl.style.cssText='font-size:.88rem;color:var(--gray-lt);margin-bottom:6px;line-height:1.4';
+  lbl.textContent=item.text;
+  const btns=document.createElement('div');
+  btns.style.cssText='display:flex;gap:4px;flex-wrap:wrap';
+  zones.forEach(z=>{
+    const b=document.createElement('button');
+    b.style.cssText=`padding:3px 8px;border-radius:3px;border:1.5px solid ${z.color};background:transparent;font-size:.75rem;cursor:pointer;color:${z.color};font-weight:700`;
+    b.textContent=z.label;
+    b.addEventListener('click',()=>assignFn(item.id,z.id));
+    btns.appendChild(b);
+  });
+  row.appendChild(lbl); row.appendChild(btns);
+  return row;
+}
+</script>
+</body>
+</html>
