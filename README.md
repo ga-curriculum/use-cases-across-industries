@@ -209,7 +209,7 @@ This is the level of specificity required to design a production agent. High-lev
 
 ## 5. Lab (60 min)
 
-*Lab details in the Lab Guide document.*
+https://pages.git.generalassemb.ly/Build-AI-Agents/Use-Cases-Across-Industries/
 
 ---
 
