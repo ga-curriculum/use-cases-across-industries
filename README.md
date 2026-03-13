@@ -235,3 +235,8 @@ https://pages.git.generalassemb.ly/Build-AI-Agents/Use-Cases-Across-Industries/
 - Lilian Weng — *LLM-powered Autonomous Agents* (2023) — [lilianweng.github.io](https://lilianweng.github.io/posts/2023-06-23-agent/)
 - [a16z — The Enterprise AI Adoption Playbook](https://a16z.com/ai/)
 - [MIT Sloan — AI in Supply Chain Management](https://mitsloan.mit.edu/ideas-made-to-matter/ai-supply-chain)
+
+
+---
+
+*General Assembly · Build AI Agents · BAA 16.0 · © 2026*
