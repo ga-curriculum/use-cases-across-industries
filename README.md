@@ -239,4 +239,4 @@ https://pages.git.generalassemb.ly/Build-AI-Agents/Use-Cases-Across-Industries/
 
 ---
 
-*General Assembly · Build AI Agents · BAA 16.0 · © 2026*
+*General Assembly · Build AI Agents · BAA 5.0 · © 2026*
